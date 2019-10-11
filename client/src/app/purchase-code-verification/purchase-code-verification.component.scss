@@ -1,0 +1,134 @@
+#purchase-code-form{
+    // text-align: center;
+    width: 100%;
+
+    .form-group{
+        margin: 0 auto;
+        // margin-bottom: 16px;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        label{
+            margin: 0;
+            padding: 0;
+            font-size: 23px;
+            font-weight: 600;
+        }
+        input{
+            margin: 0;
+            border: 1px solid #8383d4;
+            border-radius: 6px;
+            box-shadow: 0px 0px 1px 1px #8383d4;
+        }
+        input:focus{
+            box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+        }
+        .form-control.ng-touched.ng-invalid{
+            border: 1px solid red;
+            box-shadow: 0px 0px 1px 1px red;
+        }
+    }
+    .invalid-feedback{
+        display: block;
+    }
+    h2{
+        text-align: center;
+        font-weight: 400;
+        font-size: 24px;
+        color: #2a2e31;
+        margin-top: 26px;
+    }
+    p{
+        font-size: 26px;
+        color: #2a2e31;
+        margin: 0;
+        text-align: justify;
+    }
+    .form-check{
+        margin-top: 10px;
+        padding: 20px;
+        background: #c0c0c13b;
+        border: 2px solid #00000045;
+        border-radius:6px;
+        text-align: justify;
+
+        p{
+            font-size: 12px;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+        .form-check-input{
+            margin-top: 6px;
+            margin-left: 0;
+        }
+        #checkbox-label{
+            font-size: 13px;
+            margin-left: 22px;
+        }
+        a{
+            color: #0200e6;
+        }
+        re-captcha{
+            margin-top: 6px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            transform:scale(.779);
+        }
+    } 
+    .submit{
+        margin: 13px auto;
+        display: block;
+        border: 1px solid #3f3fca;
+        border-radius: 6px;
+        box-shadow: 0px 0px 1px 1px #3f3fca;
+        color: #3f3fca;
+        font-weight: 600;
+        background: transparent;
+
+        &:hover{
+            box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+        }
+
+        i{
+            font-size: 13px;
+            &:last-child{
+                margin-right: 6px;
+            }
+        }
+    }
+}
+.submitted_true{
+    .form-control.ng-invalid{
+        border: 1px solid red !important;
+        box-shadow: 0px 0px 1px 1px red !important;
+    }
+}
+
+
+
+@media only screen and (min-width: 768px) {
+    #purchase-code-form .col-md-3{
+        flex: 1 0 25%;
+        max-width: 30%;
+    }
+    #purchase-code-form .form-group{
+        flex-direction: row-reverse;
+    }
+    #purchase-code-form .form-check p{
+        font-size: 13px;
+    }
+    #purchase-code-form h2{
+        text-align: left;
+    }
+    #purchase-code-form .form-check{
+        text-align: center;
+    }
+    #purchase-code-form .form-check p{
+        text-align: center;
+        margin-bottom: 9px;
+    }
+    #purchase-code-form .form-check re-captcha{
+        transform: scale(1);
+    }
+}

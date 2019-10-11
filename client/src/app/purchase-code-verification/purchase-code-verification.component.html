@@ -1,0 +1,112 @@
+<div class="container form-container">
+    <div *ngIf="f.submitted && signupFailed" class="alert alert-warning">
+        {{errorMessage}}
+    </div>
+    <form 
+        id="purchase-code-form" 
+        class="submitted_{{f.submitted}}"
+        name="form" 
+        #f="ngForm" 
+        (ngSubmit)="f.valid && onSubmit(f)">     
+        <div class="form-group row">    
+            <div class="col-md-3">
+                <input 
+                    type="text" 
+                    required 
+                    class="form-control" 
+                    id="purchasecode" 
+                    name="purchasecode" 
+                    [(ngModel)] = "form.purchasecode"
+                    #purchasecode="ngModel"
+                >
+                <div class="invalid-feedback" 
+                    *ngIf="(f.submitted && !purchasecode.value) || (purchasecode.touched && !purchasecode.value)">
+                        <div>Se requiere un código de compra</div>
+                </div>
+
+            </div>
+            <label 
+            for="purchasecode" 
+            class="col-md-3 col-form-label">
+                Código de compra
+            </label>           
+        </div>
+            <h2>Verifique su identidad</h2>
+        <div class="form-check">
+            <p>El solicitante declara que tiene autorización suficiente para pedir el certificado de firma electrónica para fines tributarios a que se refiere esta solicitud y acepta las políticas de certificación de uso de estos certificados por el Servicio de Impuestos Internos.</p>
+            <p>Asimismo, declara que la información que va a ingresar en los siguientes pasos de en esta solicitud es verídica y responde de manera fehaciente a la información del titular del certificado.</p>
+
+            <input 
+                type="checkbox" 
+                required
+                class="form-check-input" 
+                id="checkbox" 
+                name="acceptTerms" 
+                [(ngModel)] = "form.acceptTerms" 
+                #acceptTerms="ngModel">            
+            <label 
+                id="checkbox-label" 
+                class="form-check-label" 
+                for="checkbox">
+                 Acepto los <a href="#">términos y condiciones de uso</a>
+            </label>
+            
+            <div 
+                class="invalid-feedback" 
+                *ngIf="(f.submitted && !acceptTerms.value) || (acceptTerms.touched && !acceptTerms.value)">
+                    Aceptar los términos y condiciones son obligatorios
+            </div>
+            <br>
+            
+            <p>Para continuar el proceso debe completar el Captcha.</p>
+
+            <!-- Recaptch -->
+            <div>
+                <re-captcha
+                    (resolved)="resolved($event)"
+                    siteKey="6Ld21roUAAAAAG4H3Jaa3j11fIlIhGzeKC_2OAGZ"
+                    name="captcha" 
+                    ngModel 
+                    #captcha="ngModel"
+                ></re-captcha>
+            </div>
+            <div 
+                class="invalid-feedback" 
+                *ngIf="(f.submitted && !captcha.touched)">
+                Por favor verifique captcha
+            </div>
+        </div>
+        <button  
+            type="submit"
+            name="submit" 
+            class="btn submit">
+                <i class="fas fa-greater-than"></i>
+                <i class="fas fa-greater-than"></i>
+                 Identificarse
+        </button>
+    </form>
+</div>
+<!-- <script>
+    document.getElementById('purchase-code-form').addEventListener('click', submitForm);
+
+    function submitForm(e){
+        e.preventDefault();
+        
+        const captcha = document.querySelector('#g-recaptcha-response').value;
+
+        const captchaUrl = 'http://localhost:3000/user/signup/recaptcha';
+        fetch(captchaUrl, {
+            method : 'POST',
+            headers : {
+                'Accept' : 'application/json, text/plain, */*',
+                'Content-type' : 'application/json'
+            },
+            body:JSON.stringify({captcha:captcha})
+        })
+        .then((res)=> res.json())
+        .then((data)=> {
+            console.log(data);
+            alert(data.msg);
+        });
+    }
+</script> -->
