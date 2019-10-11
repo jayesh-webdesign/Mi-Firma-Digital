@@ -53,7 +53,7 @@ exports.signup = (req, res) => {
         res.status(200).send({
             auth: true,
             accessToken: token,
-            p_code: user.p_code
+            // p_code: user.p_code
         });
     })
         .catch(err => {

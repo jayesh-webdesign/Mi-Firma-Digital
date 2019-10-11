@@ -22,4 +22,8 @@ export class AuthService {
     signUp(info: AddPurchaseCode): Observable<JwtResponse> {
       return this.http.post<JwtResponse>(this.signUpUrl, info, httpOptions);
     }
+
+    userAuth(){
+      return !!sessionStorage.getItem('accessToken');
+    }
 }

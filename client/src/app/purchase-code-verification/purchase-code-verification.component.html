@@ -86,27 +86,3 @@
         </button>
     </form>
 </div>
-<!-- <script>
-    document.getElementById('purchase-code-form').addEventListener('click', submitForm);
-
-    function submitForm(e){
-        e.preventDefault();
-        
-        const captcha = document.querySelector('#g-recaptcha-response').value;
-
-        const captchaUrl = 'http://localhost:3000/user/signup/recaptcha';
-        fetch(captchaUrl, {
-            method : 'POST',
-            headers : {
-                'Accept' : 'application/json, text/plain, */*',
-                'Content-type' : 'application/json'
-            },
-            body:JSON.stringify({captcha:captcha})
-        })
-        .then((res)=> res.json())
-        .then((data)=> {
-            console.log(data);
-            alert(data.msg);
-        });
-    }
-</script> -->

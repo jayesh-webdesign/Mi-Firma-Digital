@@ -1,15 +1,30 @@
 <div class="container">
-    <form id="upload-certificate">
+    <form 
+        id="upload-certificate" name="form" 
+        #f="ngForm" 
+        (ngSubmit)="f.valid && onSubmit(f)">
         <div class="section-1">
             <h2>¿Tiene un Certificado Digital de otro Proveedor?</h2>
             <div class="custom-control custom-radio custom-control-inline">
-            <input class="custom-control-input" type="radio" name="has_certificate" id="radios1" value="option1">
+                <input 
+                    class="custom-control-input" 
+                    type="radio" 
+                    name="has_certificate" 
+                    id="radios1" 
+                    value="option1"
+                >
                 <label class="custom-control-label" for="radios1">
                     Sí
                 </label>
                 </div>
                 <div class="custom-control custom-radio custom-control-inline">
-                <input class="custom-control-input" type="radio" name="has_certificate" id="radios2" value="option2">
+                <input 
+                    class="custom-control-input" 
+                    type="radio" 
+                    name="has_certificate" 
+                    id="radios2" 
+                    value="option2"
+                >
                 <label class="custom-control-label" for="radios2">
                     No
                 </label>
@@ -19,11 +34,21 @@
         <div class="section-2">
             <h2>¿Ya está instalado?</h2>
             <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="certificate_installed1" name="certificate_installed" class="custom-control-input">
+                <input 
+                    type="radio" 
+                    id="certificate_installed1" 
+                    name="certificate_installed" 
+                    class="custom-control-input"
+                >
                 <label class="custom-control-label" for="certificate_installed1">Sí</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="certificate_installed2" name="certificate_installed" class="custom-control-input">
+                <input 
+                    type="radio" 
+                    id="certificate_installed2" 
+                    name="certificate_installed" 
+                    class="custom-control-input"
+                >
                 <label class="custom-control-label" for="certificate_installed2">No</label>
             </div>
         </div>
@@ -36,8 +61,12 @@
                             <span class="input-group-text" id="inputGroupFileAddon01">Certificado</span>
                         </div>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="inputGroupFile01"
-                                aria-describedby="inputGroupFileAddon01">
+                            <input 
+                                type="file" 
+                                class="custom-file-input" 
+                                id="inputGroupFile01"
+                                aria-describedby="inputGroupFileAddon01"
+                            >
                             <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                         </div>
                     </div>
@@ -46,7 +75,13 @@
                 <div class="form-group row">
                     <label for="key" id="key-label" class="col-sm-1 col-form-label">Clave</label>
                     <div class="col-sm-4">
-                            <input type="text" class="form-control" id="key-input" placeholder="Clave" required>
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                id="key-input" 
+                                placeholder="Clave" 
+                                required
+                            >
                     </div>
                 </div>
             </div>
