@@ -12,4 +12,15 @@ export class UploadCertificateComponent implements OnInit {
   ngOnInit() {
   }
 
+  fileName = '';
+  onSelectFile(event){
+    console.log(event.target.files);
+    console.log(event.target.files[0].name);
+    return this.fileName = event.target.files[0].name;
+  }
+
+  onSubmit(f){
+    console.log(f.value)
+  }
+
 }

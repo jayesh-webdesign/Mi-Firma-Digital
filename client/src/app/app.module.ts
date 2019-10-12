@@ -6,11 +6,11 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { RecaptchaModule, RecaptchaFormsModule, RECAPTCHA_LANGUAGE } from 'ng-recaptcha';
 
-import { ProgressBarComponent } from './progress-bar/progress-bar.component';
-import { PurchaseCodeVerificationComponent } from './purchase-code-verification/purchase-code-verification.component';
-import { UploadCertificateComponent } from './upload-certificate/upload-certificate.component';
-import { UserProfileComponent } from './user-profile/user-profile.component';
-import { GenerateCertificateComponent } from './generate-certificate/generate-certificate.component';
+import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
+import { PurchaseCodeVerificationComponent } from './components/purchase-code-verification/purchase-code-verification.component';
+import { UploadCertificateComponent } from './components/upload-certificate/upload-certificate.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { GenerateCertificateComponent } from './components/generate-certificate/generate-certificate.component';
 import { AuthGuard } from './auth/auth.guard';
 import { CertificateDeliveryComponent } from './components/certificate-delivery/certificate-delivery.component';
 

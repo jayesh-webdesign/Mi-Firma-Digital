@@ -1,0 +1,148 @@
+<div class="container">
+    <form 
+        id="upload-certificate" 
+        class="submitted_{{f.submitted}}"
+        name="form" 
+        #f="ngForm" 
+        (ngSubmit)="f.valid && onSubmit(f)">
+
+        <!-- Section-1 -->
+        <div class="section-1">
+            <h2>¿Tiene un Certificado Digital de otro Proveedor?</h2>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input 
+                    required
+                    class="custom-control-input" 
+                    type="radio" 
+                    id="radios1" 
+                    value="yes"
+                    name="has_certificate" 
+                    ngModel
+                    #has_certificate = "ngModel"
+                >
+                <label class="custom-control-label" for="radios1">
+                    Sí
+                </label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input 
+                        required
+                        class="custom-control-input" 
+                        type="radio" 
+                        id="radios2" 
+                        value="no"
+                        name="has_certificate" 
+                        ngModel
+                        #has_certificate = "ngModel"
+                    >
+                    <label class="custom-control-label" for="radios2">
+                        No
+                    </label>
+            </div>
+
+            <!-- invalid-feedback -->
+            <div class="invalid-feedback text-center" 
+                *ngIf="(f.submitted && !has_certificate.valid)">
+                    <div>Se requiere un código de compra</div>
+            </div>
+        </div>
+        
+        <!-- Section-2 -->
+        <div class="section-2" [class.d-none]="has_certificate.value != 'yes'">
+            <h2>¿Ya está instalado?</h2>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input 
+                    [required] = "has_certificate.value === 'yes'"
+                    class="custom-control-input"
+                    type="radio" 
+                    id="certificate_installed1" 
+                    value="yes"
+                    name="certificate_installed" 
+                    ngModel
+                    #certificate_installed = "ngModel"
+                >
+                <label class="custom-control-label" for="certificate_installed1">Sí</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input 
+                    [required] = "has_certificate.value === 'yes'"
+                    class="custom-control-input"
+                    type="radio" 
+                    id="certificate_installed2" 
+                    value="no"
+                    name="certificate_installed" 
+                    ngModel
+                    #certificate_installed = "ngModel"
+                >
+                <label class="custom-control-label" for="certificate_installed2">No</label>
+            </div>
+
+            <!-- invalid-feedback -->
+            <div class="invalid-feedback text-center" 
+                *ngIf="(f.submitted && !certificate_installed.valid)">
+                <div>Se requiere un código de compra</div>
+            </div>
+        </div>
+
+        <!-- Section-3 -->
+        <div class="section-3" [class.d-none]="certificate_installed.value != 'no'">
+            <p 
+                class="text-center"
+                *ngIf="upload_certificate.dirty">
+                File Name: {{fileName}}
+            </p>
+            <div class="upload-digi-certificate">
+                <div class="upload-input">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupFileAddon01">Certificado</span>
+                        </div>
+                        <div class="custom-file">
+                            <input 
+                                [required] = "certificate_installed.value === 'no'"
+                                type="file" 
+                                class="custom-file-input" 
+                                id="inputGroupFile01"
+                                aria-describedby="inputGroupFileAddon01"
+                                (change) = "onSelectFile($event)"
+                                name = "upload_certificate"
+                                ngModel
+                                #upload_certificate = "ngModel"
+                            >
+                            <label class="custom-file-label text-left" for="inputGroupFile01">Choose file</label>
+                        </div>
+                    </div>
+                    <div class="btn submit examine">Examinar</div>
+                </div>
+
+                <!-- invalid-feedback -->
+                <div class="invalid-feedback text-center" 
+                    *ngIf="(f.submitted && !upload_certificate.valid)">
+                    <div>Se requiere un código de compra</div>
+                </div>
+                <div class="form-group row">
+                    <label for="key" id="key-label" class="col-sm-1 col-form-label">Clave</label>
+                    <div class="col-sm-4">
+                            <input 
+                                required
+                                type="text" 
+                                class="form-control" 
+                                id="key-input" 
+                                placeholder="Clave" 
+                                name = "key"
+                                ngModel
+                                #key = "ngModel"                                
+                            >
+                    </div>
+                </div>
+
+                <!-- invalid-feedback -->
+                <div class="invalid-feedback text-center" 
+                    *ngIf="(f.submitted && !key.valid)">
+                    <div>Se requiere un código de compra</div>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn submit"><i class="fas fa-greater-than"></i><i class="fas fa-greater-than"></i> Siguiente</button>
+    </form>
+</div>
