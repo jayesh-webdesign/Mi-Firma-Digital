@@ -5,6 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { RecaptchaModule, RecaptchaFormsModule, RECAPTCHA_LANGUAGE } from 'ng-recaptcha';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { FileUploadModule } from "ng2-file-upload";
 
 import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 import { PurchaseCodeVerificationComponent } from './components/purchase-code-verification/purchase-code-verification.component';
@@ -13,6 +16,7 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
 import { GenerateCertificateComponent } from './components/generate-certificate/generate-certificate.component';
 import { AuthGuard } from './auth/auth.guard';
 import { CertificateDeliveryComponent } from './components/certificate-delivery/certificate-delivery.component';
+import { FileUploadComponent } from './components/file-upload/file-upload.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +27,7 @@ import { CertificateDeliveryComponent } from './components/certificate-delivery/
     UserProfileComponent,
     GenerateCertificateComponent,
     CertificateDeliveryComponent,
+    FileUploadComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,7 +35,12 @@ import { CertificateDeliveryComponent } from './components/certificate-delivery/
     RecaptchaModule,
     RecaptchaFormsModule,
     HttpClientModule,
-    AppRoutingModule
+    FileUploadModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      preventDuplicates: true
+    })
   ],
   providers: [
     {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'upload-certificate',
@@ -7,20 +8,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UploadCertificateComponent implements OnInit {
 
-  constructor() { }
+  public uploadVerified : boolean = false;
+
+  constructor(private router:Router) { 
+    
+   }
 
   ngOnInit() {
-  }
+    if (sessionStorage.getItem('router') != 'upload-certificate') {
+      console.log(sessionStorage.getItem('router'));
+      this.router.navigate(['/']);
+    }
+    // clear certificate_status from storage
+    sessionStorage.removeItem('certificate_status');
+    
 
-  fileName = '';
-  onSelectFile(event){
-    console.log(event.target.files);
-    console.log(event.target.files[0].name);
-    return this.fileName = event.target.files[0].name;
+    document.addEventListener('storage', ()=>{
+      if(sessionStorage.getItem("certificate_status") === "uploaded") {
+        this.uploadVerified = true;
+      }
+    } );
   }
+  
 
   onSubmit(f){
     console.log(f.value)
+    window.location.reload();
   }
 
 }

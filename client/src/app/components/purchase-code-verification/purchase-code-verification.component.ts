@@ -32,7 +32,7 @@ export class PurchaseCodeVerificationComponent implements OnInit {
   signupFailed = false;
 
   constructor(private authService: AuthService,  private tokenStorage: TokenStorageService, private router: Router) {}
-  ngOnInit() { }
+  ngOnInit() { sessionStorage.clear() }
 
   onSubmit() {
     if(this.captchaResolved === false){
@@ -49,8 +49,10 @@ export class PurchaseCodeVerificationComponent implements OnInit {
         this.tokenStorage.saveToken(data.accessToken);
         if(data.message === undefined){
           this.isSignedUp = true;
+          sessionStorage.setItem('router','upload-certificate');
           return this.router.navigate(['/upload-certificate']);
         }
+        sessionStorage.setItem('router','user-profile');
         this.router.navigate(['/user-profile']);
       },
       error => {

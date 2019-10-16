@@ -1,0 +1,71 @@
+// .header-section{
+//     height: 80px;
+//     line-height: 80px;
+//     color: beige;
+//     background-color: rgb(46, 43, 43);
+//     font-size: 24px;
+//     padding-left: 20px;
+// }
+
+// .card{
+//     background-color: white;
+//     box-shadow:0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
+//     color:black;
+//     margin: 20px;
+//     padding: 10px;
+// }
+
+// .uploadList{
+//     padding: 10px;
+//     margin-top: 10px;
+//     margin-bottom: 10px;
+// }
+
+
+    .submit{
+        margin: 26px auto;
+        display: block;
+        border: 1px solid #3f3fca;
+        border-radius: 6px;
+        box-shadow: 0px 0px 1px 1px #3f3fca;
+        color: #3f3fca;
+        font-weight: 600;
+        background: transparent;
+
+        &:hover{
+            box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+        }
+    }
+    
+    .input-group-text{
+        font-size: 15px;
+        height: 38px;
+    }
+    .custom-file{
+        .custom-file-label{
+            padding: 7.5px 10px;
+        }
+    }
+
+
+@media only screen and (min-width: 768px) {
+
+    .input-group-append, .input-group-prepend{
+        display: block;
+    }
+    .upload-input .input-group{
+        width: fit-content;
+    }
+    .upload-input{
+        display: flex;
+        align-items: center;
+        width: fit-content;
+    }
+    .examine{
+        margin: 0 !important;
+        margin-left: 10px !important;
+    }
+    .custom-file .custom-file-label{
+        padding: .375rem .75rem;
+    }
+}

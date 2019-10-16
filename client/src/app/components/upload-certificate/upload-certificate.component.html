@@ -43,7 +43,7 @@
             <!-- invalid-feedback -->
             <div class="invalid-feedback text-center" 
                 *ngIf="(f.submitted && !has_certificate.valid)">
-                    <div>Se requiere un código de compra</div>
+                    <div>por favor elige uno de ellos</div>
             </div>
         </div>
         
@@ -80,69 +80,37 @@
             <!-- invalid-feedback -->
             <div class="invalid-feedback text-center" 
                 *ngIf="(f.submitted && !certificate_installed.valid)">
-                <div>Se requiere un código de compra</div>
+                <div>por favor elige uno de ellos</div>
             </div>
         </div>
 
         <!-- Section-3 -->
-        <div class="section-3" [class.d-none]="certificate_installed.value != 'no'">
-            <p 
-                class="text-center"
-                *ngIf="upload_certificate.dirty">
-                File Name: {{fileName}}
-            </p>
-            <div class="upload-digi-certificate">
-                <div class="upload-input">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="inputGroupFileAddon01">Certificado</span>
+        <div class="section-3"  [class.d-none]="certificate_installed.value != 'no' || has_certificate.value != 'yes'">
+                <div class="upload-digi-certificate">
+                        <file-upload></file-upload>
+                        <div class="form-group row">
+                            <label for="key" id="key-label" class="col-sm-1 col-form-label">Clave</label>
+                            <div class="col-sm-4">
+                                    <input 
+                                        required
+                                        type="text" 
+                                        class="form-control" 
+                                        id="key-input" 
+                                        placeholder="Clave" 
+                                        name = "key"
+                                        ngModel
+                                        #key = "ngModel"
+                                    >
+                            </div>
                         </div>
-                        <div class="custom-file">
-                            <input 
-                                [required] = "certificate_installed.value === 'no'"
-                                type="file" 
-                                class="custom-file-input" 
-                                id="inputGroupFile01"
-                                aria-describedby="inputGroupFileAddon01"
-                                (change) = "onSelectFile($event)"
-                                name = "upload_certificate"
-                                ngModel
-                                #upload_certificate = "ngModel"
-                            >
-                            <label class="custom-file-label text-left" for="inputGroupFile01">Choose file</label>
+                    
+                        <!-- invalid-feedback -->
+                        <div class="invalid-feedback text-center" 
+                            *ngIf="(f.submitted && !key.valid)">
+                            <div>Por favor ingrese su clave</div>
                         </div>
                     </div>
-                    <div class="btn submit examine">Examinar</div>
-                </div>
-
-                <!-- invalid-feedback -->
-                <div class="invalid-feedback text-center" 
-                    *ngIf="(f.submitted && !upload_certificate.valid)">
-                    <div>Se requiere un código de compra</div>
-                </div>
-                <div class="form-group row">
-                    <label for="key" id="key-label" class="col-sm-1 col-form-label">Clave</label>
-                    <div class="col-sm-4">
-                            <input 
-                                required
-                                type="text" 
-                                class="form-control" 
-                                id="key-input" 
-                                placeholder="Clave" 
-                                name = "key"
-                                ngModel
-                                #key = "ngModel"                                
-                            >
-                    </div>
-                </div>
-
-                <!-- invalid-feedback -->
-                <div class="invalid-feedback text-center" 
-                    *ngIf="(f.submitted && !key.valid)">
-                    <div>Se requiere un código de compra</div>
-                </div>
-            </div>
         </div>
-        <button type="submit" class="btn submit"><i class="fas fa-greater-than"></i><i class="fas fa-greater-than"></i> Siguiente</button>
+        <button type="submit" class="btn submit" *ngIf='uploadVerified'><i class="fas fa-greater-than"></i><i class="fas fa-greater-than"></i> Siguiente</button>
     </form>
 </div>
