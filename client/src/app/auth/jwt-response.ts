@@ -3,4 +3,5 @@ export class JwtResponse {
     type : string;
     p_code : string;
     message : string;
+    id : string;
 }

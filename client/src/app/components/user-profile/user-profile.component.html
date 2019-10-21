@@ -1,2 +1,467 @@
-<p>user-profile works!</p>
+<!-- Pre-filled form -->
+<div class="card p-2 mt-5" *ngIf = "ngForm">
+    <form 
+        class="submitted_{{f.submitted}}"
+        name="form" 
+        #f="ngForm" 
+        (ngSubmit)="f.valid && onSubmit(form)"
+    >
+            <div class="bg-primary text-white text-center py-2 br-11 rounded">
+                <p class="m-0">Ingrese los datos para su certificado</p>
+            </div>
+            <div class="card-body p-3">
 
+                <!--Body-->
+                <div class="form-group">
+                    <label for="rut">RUT</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">RUT</div>
+                        </div>
+                        <input 
+                            type="text" 
+                            class="form-control "
+                            id="rut" 
+                            name="rut" 
+                            placeholder="RUT de Documento de identidad" 
+                            required
+                            name="rut" 
+                            [(ngModel)] = "ngForm.rut? ngForm.rut : f.rut"
+                            #rut="ngModel"
+                            (blur)="rutValidation(rut)"
+                        >
+                    </div>
+                    <!-- invalid-feedback -->
+                    <div class="invalid-feedback text-center" 
+                        *ngIf="(f.submitted && !rut.valid) || (rut.touched && !rut.valid)">
+                            <div><span style="text-transform: uppercase;">{{rut.name}}</span> es requerido</div>
+                    </div>
+                    <!-- invalid-feedback -->
+                    <div class="invalid-feedback text-center" 
+                        *ngIf="(f.submitted && !rut.valid && rut.model) || (rut.touched && rut.model && !isRutValid)">
+                            <div><span style="text-transform: capitalize;">{{rut.name}}</span> es inválido</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="serie">Serie</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Serie</div>
+                        </div>
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            id="serie" 
+                            placeholder="Serie de Documento de identidad" 
+                            required
+                            name="serie" 
+                            [(ngModel)] = "ngForm.series"
+                            #serie="ngModel"
+                        >
+                    </div>
+                    <!-- invalid-feedback -->
+                    <div class="invalid-feedback text-center" 
+                        *ngIf="(f.submitted && !serie.valid) || (serie.touched && !serie.valid)">
+                            <div><span style="text-transform: capitalize;">{{serie.name}}</span> es requerido</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Email</div>
+                        </div>
+                        <input 
+                            type="email" 
+                            class="form-control" 
+                            id="email" 
+                            placeholder="Entra tu email" 
+                            email
+                            required
+                            name="email" 
+                            [(ngModel)] = "ngForm.email"
+                            #email="ngModel"
+                        >
+                    </div>
+                    <!-- invalid-feedback -->
+                    <div class="invalid-feedback text-center" 
+                        *ngIf="(f.submitted && email.errors?.required) || (email.touched && email.errors?.required)">
+                            <div><span style="text-transform: capitalize;">{{email.name}}</span> es requerido</div>
+                    </div>
+                    <!-- invalid-feedback -->
+                    <div class="invalid-feedback text-center" 
+                        *ngIf="(f.submitted && email.errors?.email) || (email.touched && email.errors?.email)">
+                            <div><span style="text-transform: capitalize;">{{email.name}}</span> es inválido</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="f_name">Primer Nombre</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Primer Nombre</div>
+                        </div>
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            id="f_name" 
+                            placeholder="Entra tu Primer Nombre" 
+                            required
+                            name="f_name" 
+                            [(ngModel)] = "ngForm.f_name"
+                            #f_name="ngModel"
+                        >
+                    </div>
+                    <!-- invalid-feedback -->
+                    <div class="invalid-feedback text-center" 
+                        *ngIf="(f.submitted && !f_name.valid) || (f_name.touched && !f_name.valid)">
+                            <div><span style="text-transform: capitalize;">Primer Nombre</span> es requerido</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="l_name">Apellido Paterno</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Apellido Paterno</div>
+                        </div>
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            id="l_name" 
+                            placeholder="Entra tu Apellido Paterno" 
+                            required
+                            name="l_name" 
+                            [(ngModel)] = "ngForm.l_name"
+                            #l_name="ngModel"
+                        >
+                    </div>
+                    <!-- invalid-feedback -->
+                    <div class="invalid-feedback text-center" 
+                        *ngIf="(f.submitted && !l_name.valid) || (l_name.touched && !l_name.valid)">
+                            <div><span style="text-transform: capitalize;">Apellido Paterno</span> es requerido</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="m_l_name">Apellido Materno</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Apellido Materno</div>
+                        </div>
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            id="m_l_name" 
+                            placeholder="Entra tu Apellido Materno" 
+                            required
+                            name="m_l_name" 
+                            [(ngModel)] = "ngForm.m_l_name"
+                            #m_l_name="ngModel"
+                        >
+                    </div>
+                    <!-- invalid-feedback -->
+                    <div class="invalid-feedback text-center" 
+                        *ngIf="(f.submitted && !m_l_name.valid) || (m_l_name.touched && !m_l_name.valid)">
+                            <div><span style="text-transform: capitalize;">Apellido Materno</span> es requerido</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="datepicker">Fecha de Nacimiento</label>
+                    <div class="input-group mb-2">
+                        
+                        <div class="datepicker-container">
+                                <div class="input-group-prepend">
+                                        <div class="input-group-text">Fecha de Nacimiento</div>
+                                    </div>
+                            <input type="text" 
+                                id="datepicker" 
+                                class="form-control rounded-0" 
+                                placeholder="Fecha de nacimiento" 
+                                required
+                                name="datepicker" 
+                                [maxDate]="maxDate"
+                                [(ngModel)] = "ngForm.b_date"
+                                #datepicker="ngModel"
+                                bsDatepicker
+                                [bsConfig]="bsConfig"
+                            >
+                        </div>
+                        <!-- invalid-feedback -->
+                        <div class="invalid-feedback text-center" 
+                            *ngIf="(f.submitted && !datepicker.valid) || (datepicker.touched && !datepicker.valid)">
+                                <div><span style="text-transform: capitalize;">Fecha de Nacimiento</span> es requerido</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="clave">Clave</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Clave</div>
+                        </div>
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            id="clave" 
+                            placeholder="Entra tu Clave" 
+                            required
+                            name="clave" 
+                            [(ngModel)] = "ngForm.key"
+                            #clave="ngModel"
+                        >
+                    </div>
+                    <!-- invalid-feedback -->
+                    <div class="invalid-feedback text-center" 
+                        *ngIf="(f.submitted && !clave.valid) || (clave.touched && !clave.valid)">
+                            <div><span style="text-transform: capitalize;">{{clave.name}}</span> es requerido</div>
+                    </div>
+                </div>
+
+                <!-- Submit -->
+                <div class="text-center mt-4">
+                    <button  
+                    type="submit"
+                    name="submit" 
+                    class="btn submit"
+                >
+                        <i class="fas fa-greater-than"></i>
+                        <i class="fas fa-greater-than"></i>
+                         Siguiente
+                </button>
+                </div>
+            </div>
+    </form>
+</div>
+
+
+
+<!-- Blank form -->
+<div class="card p-2 mt-5" *ngIf = "!ngForm">
+    <form 
+        class="submitted_{{f.submitted}}"
+        name="form" 
+        #f="ngForm" 
+        (ngSubmit)="f.valid && onSubmit(f)"
+    >
+            <div class="bg-primary text-white text-center py-2 br-11 rounded">
+                <p class="m-0">Ingrese los datos para su certificado</p>
+            </div>
+            <div class="card-body p-3">
+
+                <!--Body-->
+                <div class="form-group">
+                    <label for="rut">RUT</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">RUT</div>
+                        </div>
+                        <input 
+                            type="text" 
+                            class="form-control "
+                            id="rut" 
+                            name="rut" 
+                            placeholder="RUT de Documento de identidad" 
+                            required
+                            name="rut" 
+                            [(ngModel)] = "form.rut"
+                            #rut="ngModel"
+                            (blur)="rutValidation(rut)"
+                        >
+                    </div>
+                    <!-- invalid-feedback -->
+                    <div class="invalid-feedback text-center" 
+                        *ngIf="(f.submitted && !rut.valid) || (rut.touched && !rut.valid)">
+                            <div><span style="text-transform: uppercase;">{{rut.name}}</span> es requerido</div>
+                    </div>
+                    <!-- invalid-feedback -->
+                    <div class="invalid-feedback text-center" 
+                        *ngIf="(f.submitted && !rut.valid && rut.model) || (rut.touched && rut.model && !isRutValid)">
+                            <div><span style="text-transform: capitalize;">{{rut.name}}</span> es inválido</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="serie">Serie</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Serie</div>
+                        </div>
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            id="serie" 
+                            placeholder="Serie de Documento de identidad" 
+                            required
+                            name="serie" 
+                            [(ngModel)] = "form.serie"
+                            #serie="ngModel"
+                        >
+                    </div>
+                    <!-- invalid-feedback -->
+                    <div class="invalid-feedback text-center" 
+                        *ngIf="(f.submitted && !serie.valid) || (serie.touched && !serie.valid)">
+                            <div><span style="text-transform: capitalize;">{{serie.name}}</span> es requerido</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Email</div>
+                        </div>
+                        <input 
+                            type="email" 
+                            class="form-control" 
+                            id="email" 
+                            placeholder="Entra tu email" 
+                            email
+                            required
+                            name="email" 
+                            [(ngModel)] = "form.email"
+                            #email="ngModel"
+                        >
+                    </div>
+                    <!-- invalid-feedback -->
+                    <div class="invalid-feedback text-center" 
+                        *ngIf="(f.submitted && email.errors?.required) || (email.touched && email.errors?.required)">
+                            <div><span style="text-transform: capitalize;">{{email.name}}</span> es requerido</div>
+                    </div>
+                    <!-- invalid-feedback -->
+                    <div class="invalid-feedback text-center" 
+                        *ngIf="(f.submitted && email.errors?.email) || (email.touched && email.errors?.email)">
+                            <div><span style="text-transform: capitalize;">{{email.name}}</span> es inválido</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="f_name">Primer Nombre</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Primer Nombre</div>
+                        </div>
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            id="f_name" 
+                            placeholder="Entra tu Primer Nombre" 
+                            required
+                            name="f_name" 
+                            [(ngModel)] = "form.f_name"
+                            #f_name="ngModel"
+                        >
+                    </div>
+                    <!-- invalid-feedback -->
+                    <div class="invalid-feedback text-center" 
+                        *ngIf="(f.submitted && !f_name.valid) || (f_name.touched && !f_name.valid)">
+                            <div><span style="text-transform: capitalize;">Primer Nombre</span> es requerido</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="l_name">Apellido Paterno</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Apellido Paterno</div>
+                        </div>
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            id="l_name" 
+                            placeholder="Entra tu Apellido Paterno" 
+                            required
+                            name="l_name" 
+                            [(ngModel)] = "form.l_name"
+                            #l_name="ngModel"
+                        >
+                    </div>
+                    <!-- invalid-feedback -->
+                    <div class="invalid-feedback text-center" 
+                        *ngIf="(f.submitted && !l_name.valid) || (l_name.touched && !l_name.valid)">
+                            <div><span style="text-transform: capitalize;">Apellido Paterno</span> es requerido</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="m_l_name">Apellido Materno</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Apellido Materno</div>
+                        </div>
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            id="m_l_name" 
+                            placeholder="Entra tu Apellido Materno" 
+                            required
+                            name="m_l_name" 
+                            [(ngModel)] = "form.m_l_name"
+                            #m_l_name="ngModel"
+                        >
+                    </div>
+                    <!-- invalid-feedback -->
+                    <div class="invalid-feedback text-center" 
+                        *ngIf="(f.submitted && !m_l_name.valid) || (m_l_name.touched && !m_l_name.valid)">
+                            <div><span style="text-transform: capitalize;">Apellido Materno</span> es requerido</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="datepicker">Fecha de Nacimiento</label>
+                    <div class="input-group mb-2">
+                        
+                        <div class="datepicker-container">
+                                <div class="input-group-prepend">
+                                        <div class="input-group-text">Fecha de Nacimiento</div>
+                                    </div>
+                            <input type="text" 
+                                id="datepicker" 
+                                class="form-control rounded-0" 
+                                placeholder="Fecha de nacimiento" 
+                                required
+                                name="datepicker" 
+                                [maxDate]="maxDate"
+                                [(ngModel)] = "form.datepicker"
+                                #datepicker="ngModel"
+                                bsDatepicker
+                                [bsConfig]="bsConfig"
+                            >
+                        </div>
+                        <!-- invalid-feedback -->
+                        <div class="invalid-feedback text-center" 
+                            *ngIf="(f.submitted && !datepicker.valid) || (datepicker.touched && !datepicker.valid)">
+                                <div><span style="text-transform: capitalize;">Fecha de Nacimiento</span> es requerido</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="clave">Clave</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Clave</div>
+                        </div>
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            id="clave" 
+                            placeholder="Entra tu Clave" 
+                            required
+                            name="clave" 
+                            [(ngModel)] = "form.clave"
+                            #clave="ngModel"
+                        >
+                    </div>
+                    <!-- invalid-feedback -->
+                    <div class="invalid-feedback text-center" 
+                        *ngIf="(f.submitted && !clave.valid) || (clave.touched && !clave.valid)">
+                            <div><span style="text-transform: capitalize;">{{clave.name}}</span> es requerido</div>
+                    </div>
+                </div>
+
+                <!-- Submit -->
+                <div class="text-center mt-4">
+                    <button  
+                    type="submit"
+                    name="submit" 
+                    class="btn submit"
+                >
+                        <i class="fas fa-greater-than"></i>
+                        <i class="fas fa-greater-than"></i>
+                         Siguiente
+                </button>
+                </div>
+            </div>
+    </form>
+</div>

@@ -23,6 +23,10 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.user = require('../model/User')(sequelize, Sequelize);
+db.purchase_code = require('../model/PurchaseCode')(sequelize, Sequelize);
+
+db.user.hasMany(db.purchase_code); // Will add userId to PurchaseCode model
+db.purchase_code.belongsTo(db.user); // Will also add userId to PurchaseCode model
 
 
 

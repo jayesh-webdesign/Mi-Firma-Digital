@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize');
-const db = require('../config/db.config');
 
 module.exports = (sequelize, Sequelize) =>{
-    const User = sequelize.define('users', {
+    //  Define model
+    const User = sequelize.define('user', {
         f_name: {
             type: Sequelize.STRING
         },
@@ -12,20 +12,24 @@ module.exports = (sequelize, Sequelize) =>{
         email: {
             type: Sequelize.STRING
         },
-        p_code: {
-            type: Sequelize.STRING,
-            allowNull: false
-        },
         rut: {
+            type: Sequelize.INTEGER
+        },
+        dv: {
             type: Sequelize.STRING
+        },
+        rutdv: {
+            type: Sequelize.STRING,
+            allowNull: false,
+            primaryKey: true
         },
         series: {
             type: Sequelize.STRING
         },
-        phone: {
+        f_name: {
             type: Sequelize.STRING
         },
-        series: {
+        l_name: {
             type: Sequelize.STRING
         },
         m_l_name: {
@@ -37,41 +41,12 @@ module.exports = (sequelize, Sequelize) =>{
         key: {
             type: Sequelize.STRING
         },
+    }, {
+        // Enable Underscore
+        underscored: true,
+        sequelize,
+        modelName: 'user'
     });
 
     return User;
 }
-
-
-// const  User = sequelize.define('user', {
-//             f_name: {
-//                 type: Sequelize.STRING
-//             },
-//             l_name: {
-//                 type: Sequelize.STRING
-//             },
-//             email: {
-//                 type: Sequelize.STRING
-//             },
-//             p_code: {
-//                 type: Sequelize.STRING,
-//                 notNull: true
-//             },
-//             rut: {
-//                 type: Sequelize.STRING
-//             },
-//             series: {
-//                 type: Sequelize.STRING
-//             },
-//             m_l_name: {
-//                 type: Sequelize.STRING
-//             },
-//             b_date: {
-//                 type: Sequelize.DATEONLY
-//             },
-//             key: {
-//                 type: Sequelize.STRING
-//             },
-// });
-
-// module.exports = User;

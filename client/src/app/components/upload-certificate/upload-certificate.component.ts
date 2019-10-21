@@ -16,11 +16,13 @@ export class UploadCertificateComponent implements OnInit {
 
   ngOnInit() {
     if (sessionStorage.getItem('router') != 'upload-certificate') {
-      console.log(sessionStorage.getItem('router'));
       this.router.navigate(['/']);
     }
+    
     // clear certificate_status from storage
     sessionStorage.removeItem('certificate_status');
+    // And router
+    sessionStorage.removeItem('router');
     
 
     document.addEventListener('storage', ()=>{
@@ -32,8 +34,10 @@ export class UploadCertificateComponent implements OnInit {
   
 
   onSubmit(f){
-    console.log(f.value)
-    window.location.reload();
+    // console.log(f.value);
+    // window.location.reload();
+    sessionStorage.setItem('router' , 'user-profile');
+    this.router.navigate(['/user-profile']);
   }
 
 }

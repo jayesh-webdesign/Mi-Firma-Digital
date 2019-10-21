@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core';
 // Token
 const TOKEN_KEY = 'accessToken';
 // Purchase code
-const CODEKEY = 'Purchase code';
+const PURCHASECODE = 'Purchase code';
+// Id
+const USERID = 'Use id'
 
 @Injectable({
   providedIn: 'root'
@@ -27,19 +29,20 @@ export class TokenStorageService {
   }
 
   public saveAuthCode(p_code: string) {
-    window.sessionStorage.removeItem(CODEKEY);
-    window.sessionStorage.setItem(CODEKEY, p_code);
+    window.sessionStorage.removeItem(PURCHASECODE);
+    window.sessionStorage.setItem(PURCHASECODE, p_code);
   }
 
   public getAuthCode(): string {
-    return sessionStorage.getItem(CODEKEY);
+    return sessionStorage.getItem(PURCHASECODE);
+  }
+
+  public saveId(id : string) {
+    return sessionStorage.setItem(USERID, id);
+  }
+
+  public getId(): String {
+    return sessionStorage.getItem(USERID);
   }
 
 }
-
-
-
-
-// "auth": true,
-// "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTcwNjk1MDk5LCJleHAiOjE1NzA3ODE0OTl9.HoUaXYbo_OXVrT7dPKNbqfjSY0NfPJHItedgWWQrfCU",
-// "p_code": 2

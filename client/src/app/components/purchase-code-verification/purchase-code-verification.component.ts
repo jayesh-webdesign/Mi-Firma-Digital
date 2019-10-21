@@ -32,7 +32,7 @@ export class PurchaseCodeVerificationComponent implements OnInit {
   signupFailed = false;
 
   constructor(private authService: AuthService,  private tokenStorage: TokenStorageService, private router: Router) {}
-  ngOnInit() { sessionStorage.clear() }
+  ngOnInit() { this.tokenStorage.clearToken() }
 
   onSubmit() {
     if(this.captchaResolved === false){
@@ -40,23 +40,27 @@ export class PurchaseCodeVerificationComponent implements OnInit {
       this.signupFailed = true;
       return true;
     }
-
+    // Assign the values
     this.addPurchaseCode = new AddPurchaseCode(
         this.form.purchasecode
     );
-    this.authService.signUp(this.addPurchaseCode).subscribe(
+    this.authService.addPurchasecode(this.addPurchaseCode).subscribe(
       data => {
         this.tokenStorage.saveToken(data.accessToken);
-        if(data.message === undefined){
+        if( data.message === undefined || data.message === 'Purchase code alredy registered'){
           this.isSignedUp = true;
           sessionStorage.setItem('router','upload-certificate');
-          return this.router.navigate(['/upload-certificate']);
+          this.router.navigate(['/upload-certificate']);
+          // console.log('/upload-certificate')
+          return true;
         }
-        sessionStorage.setItem('router','user-profile');
-        this.router.navigate(['/user-profile']);
+        if( data.message === 'User alredy registered' ){
+          sessionStorage.setItem('router','user-profile');
+          this.router.navigate(['/user-profile']);
+          // console.log('/user-profile')
+        }
       },
       error => {
-        console.log(error);
         this.errorMessage = error.error;
         this.signupFailed = true;
       }

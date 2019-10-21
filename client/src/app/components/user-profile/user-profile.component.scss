@@ -1,0 +1,68 @@
+.input-group-text{
+    background: #6d6df1;
+    color: #ffffff;
+}
+.input-group-text, .form-control{
+    font-size: 14px;
+}
+.input-group-prepend{
+    display: none;
+}
+.datepicker-container{
+    width: 100%;
+}
+.submit{
+    margin: 13px auto;
+    display: block;
+    border: 1px solid #3f3fca;
+    border-radius: 6px;
+    box-shadow: 0px 0px 1px 1px #3f3fca;
+    color: #3f3fca;
+    font-weight: 600;
+    background: transparent;
+
+    &:hover{
+        box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+    }
+
+    i{
+        font-size: 13px;
+        &:last-child{
+            margin-right: 6px;
+        }
+    }
+}
+.submitted_true{
+    .form-control.ng-invalid{
+        border: 1px solid red !important;
+        box-shadow: 0px 0px 1px 1px red !important;
+    }
+}
+.form-control.ng-invalid.ng-touched{
+    border: 1px solid red !important;
+    box-shadow: 0px 0px 1px 1px red !important;
+}
+
+.invalid-feedback{
+    display: block;
+}
+
+@media(min-width: 768px){
+    label{
+        display: none;
+    }
+    .input-group-prepend{
+        display: block;
+        width: 165px !important;
+    }
+    .input-group-text{
+        border-radius: 0.25rem 0 0 0.25rem;
+
+        &:last-child{
+            padding-right: 21px;
+        }
+    }
+    .datepicker-container{
+        display: flex;
+    }
+}
