@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthService } from "../../auth/auth.service";
+import { AuthService } from "../../services/auth.service";
 import { AddPurchaseCode } from "../../auth/user-info";
-import { TokenStorageService } from "../../auth/token-storage.service";
+import { TokenStorageService } from "../../services/token-storage.service";
 import { RecaptchaComponent } from 'ng-recaptcha';
 
 @Component({

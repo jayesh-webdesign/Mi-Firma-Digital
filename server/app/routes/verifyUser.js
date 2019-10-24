@@ -20,7 +20,6 @@ checkUserAlreadyExist = (req, res, next) => {
                     auth: true,
                     accessToken: token,
                     message: 'RUT already exist',
-                    // p_code: user.p_code
                 });
             }
             
@@ -38,7 +37,6 @@ checkUserAlreadyExist = (req, res, next) => {
                         auth: true,
                         accessToken: token,
                         message: 'Email already exist',
-                        // p_code: user.p_code
                     });
                    
                 }else{
@@ -60,7 +58,7 @@ checkPurchaseCodeAlreadyExist = (req, res, next) => {
         }
     }).then(user => {
             if(user){
-                if(user.userRutdv) {
+                if(user.userRut) {
                     var token = jwt.sign({p_code: user.p_code}, config.secret, {
                         expiresIn: 86400 // 24 hours
                     });
@@ -68,8 +66,7 @@ checkPurchaseCodeAlreadyExist = (req, res, next) => {
                     res.status(200).send({
                         auth: true,
                         accessToken: token,
-                        message: 'User alredy registered',
-                        id: user.userId
+                        message: 'User alredy registered'
                     });
                 }else{
                     var token = jwt.sign({p_code: user.p_code}, config.secret, {

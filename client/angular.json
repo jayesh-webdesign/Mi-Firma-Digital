@@ -68,7 +68,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "mi-firma-digital:build"
+            "browserTarget": "mi-firma-digital:build",
+            "proxyConfig": "proxy.conf.json"
           },
           "configurations": {
             "production": {

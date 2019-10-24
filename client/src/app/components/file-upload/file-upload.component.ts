@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { FileSelectDirective, FileUploader} from 'ng2-file-upload';
 
-import { FileService } from './file.service';
+import { FileService } from '../../services/file.service';
 import {saveAs} from 'file-saver';
  
-// const URL = '/api/';
-const URL = 'http://localhost:3000/file/upload-certificate';
+const URL = 'api/file/upload-certificate';
  
 @Component({
   selector: 'file-upload',

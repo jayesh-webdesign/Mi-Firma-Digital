@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, observable } from "rxjs";
 
-import { JwtResponse } from "./jwt-response";
-import { AddPurchaseCode, UserInfo } from "./user-info";
+import { JwtResponse } from "../auth/jwt-response";
+import { AddPurchaseCode, UserInfo } from "../auth/user-info";
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -14,11 +14,11 @@ const httpOptions = {
 })
 export class AuthService {
 
-  private signUpUrl = 'http://localhost:3000/user/signup';
-  private profileUpdateUrl = 'http://localhost:3000/user/update';
-  private purchasecodeUrl = 'http://localhost:3000/user/purchasecode';
-  private userProfileUrl = 'http://localhost:3000/user/profile';
-
+  private signUpUrl = 'api/user/signup';
+  private profileUpdateUrl = 'api/user/update';
+  private purchasecodeUrl = 'api/user/purchasecode';
+  private userProfileUrl = 'api/user/profile';
+  
   constructor(private http:HttpClient) {}
 
     signUp(info: UserInfo): Observable<any> {

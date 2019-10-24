@@ -25,4 +25,19 @@ const env = {
 //         idle:10000
 //     }
 // };
+//Db server
+// const env = {
+//     database:'api_db',
+//     username:'Master',
+//     password:'Wert6765$#',
+//     host:'172.105.153.228',
+//     dialect:'mysql',
+//     pool:{
+//         max: 5,
+//         min: 0,
+//         acquire:30000,
+//         idle:10000
+//     }
+// };
+
 module.exports = env;

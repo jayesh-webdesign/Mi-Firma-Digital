@@ -7,7 +7,7 @@ export class UserInfo {
     series : string;
     m_l_name : string;
     b_date : Date;
-    key : string;
+    // key : string;
 
     constructor(
         f_name : string,
@@ -18,7 +18,7 @@ export class UserInfo {
         series : string,
         m_l_name : string,
         b_date : Date,
-        key : string
+        // key : string
     ){
         this.f_name = f_name;
         this.l_name = l_name;
@@ -28,7 +28,7 @@ export class UserInfo {
         this.series = series;
         this.m_l_name = m_l_name;
         this.b_date = b_date;
-        this.key = key;
+        // this.key = key;
     }
 }
 

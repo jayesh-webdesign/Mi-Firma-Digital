@@ -17,15 +17,15 @@ exports.oneuserinfo = (req, res) => {
     }).then( PurchaseCode => {
         User.findOne({
             where: {
-                rut: PurchaseCode.userRutdv
+                rut: PurchaseCode.userRut
             }
         }).then(user => {
             if (user) {
                 // Decrypt to the Key
-                var mykey = crypto.createDecipher('aes-128-cbc', 'mypassword');
-                var key = mykey.update(user.key, 'hex', 'utf8')
-                key += mykey.final('utf8');
-                user.key = key;
+                // var mykey = crypto.createDecipher('aes-128-cbc', 'mypassword');
+                // var key = mykey.update(user.key, 'hex', 'utf8')
+                // key += mykey.final('utf8');
+                // user.key = key;
                 res.status(200).send(user);
             }
             res.status(200).send(user);
@@ -40,9 +40,9 @@ exports.oneuserinfo = (req, res) => {
 // User signup
 exports.signup = (req, res) => {
     // Encrypt the Key
-    var mykey = crypto.createCipher('aes-128-cbc', 'mypassword');
-    var keyHex = mykey.update(req.body.key, 'utf8', 'hex')
-    keyHex += mykey.final('hex');
+    // var mykey = crypto.createCipher('aes-128-cbc', 'mypassword');
+    // var keyHex = mykey.update(req.body.key, 'utf8', 'hex')
+    // keyHex += mykey.final('hex');
 
     User.create({
         f_name : req.body.f_name, 
@@ -50,15 +50,14 @@ exports.signup = (req, res) => {
         email : req.body.email, 
         rut : req.body.rut, 
         dv : req.body.dv, 
-        rutdv : req.body.rut + req.body.dv, 
         series : req.body.series, 
         m_l_name : req.body.m_l_name, 
         b_date : req.body.b_date, 
-        key : keyHex
+        // key : keyHex
     }).then(user => {
         PurchaseCode.update(
             {
-                userRutdv: user.rutdv
+                userRut: user.rut
             },
             {
                 where: {p_code : res.locals.p_code}
@@ -76,9 +75,9 @@ exports.signup = (req, res) => {
 // User update
 exports.update = (req, res) => {
     // Encrypt the Key
-    var mykey = crypto.createCipher('aes-128-cbc', 'mypassword');
-    var keyHex = mykey.update(req.body.key, 'utf8', 'hex')
-    keyHex += mykey.final('hex');
+    // var mykey = crypto.createCipher('aes-128-cbc', 'mypassword');
+    // var keyHex = mykey.update(req.body.key, 'utf8', 'hex')
+    // keyHex += mykey.final('hex');
     
     // res.send({'p_code':res.locals.p_code})
     User.update(
@@ -88,17 +87,16 @@ exports.update = (req, res) => {
             email : req.body.email, 
             rut : req.body.rut, 
             dv : req.body.dv, 
-            rutdv : req.body.rut + req.body.dv, 
             series : req.body.series, 
             m_l_name : req.body.m_l_name, 
             b_date : req.body.b_date, 
-            key : keyHex
+            // key : keyHex
         },
-        { where: { rutdv : req.body.rut + req.body.dv }
+        { where: { rut : req.body.rut }
     }).then(user => {
         PurchaseCode.update(
             {
-                userRutdv: user.rutdv
+                userRut: user.rut
             },
             {
                 where: {p_code : res.locals.p_code}

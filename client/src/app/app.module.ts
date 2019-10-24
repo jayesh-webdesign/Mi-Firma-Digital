@@ -18,7 +18,7 @@ import { GenerateCertificateComponent } from './components/generate-certificate/
 import { AuthGuard } from './auth/auth.guard';
 import { CertificateDeliveryComponent } from './components/certificate-delivery/certificate-delivery.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
-import { TokenInterceptorService } from "./auth/token-interceptor.service";
+import { TokenInterceptorService } from "./services/token-interceptor.service";
 
 @NgModule({
   declarations: [

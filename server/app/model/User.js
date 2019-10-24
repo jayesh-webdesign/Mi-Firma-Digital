@@ -13,15 +13,12 @@ module.exports = (sequelize, Sequelize) =>{
             type: Sequelize.STRING
         },
         rut: {
-            type: Sequelize.INTEGER
+            type: Sequelize.INTEGER,
+                allowNull: false,
+                primaryKey: true
         },
         dv: {
             type: Sequelize.STRING
-        },
-        rutdv: {
-            type: Sequelize.STRING,
-            allowNull: false,
-            primaryKey: true
         },
         series: {
             type: Sequelize.STRING
@@ -38,9 +35,9 @@ module.exports = (sequelize, Sequelize) =>{
         b_date: {
             type: Sequelize.DATEONLY
         },
-        key: {
-            type: Sequelize.STRING
-        },
+        // key: {
+        //     type: Sequelize.STRING
+        // },
     }, {
         // Enable Underscore
         underscored: true,

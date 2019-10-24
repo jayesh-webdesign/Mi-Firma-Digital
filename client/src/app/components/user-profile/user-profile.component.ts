@@ -5,7 +5,7 @@ import { format } from '@dgitals/rut'
 import { validate } from '@dgitals/rut'
 import { clean } from '@dgitals/rut'
 
-import { AuthService } from "../../auth/auth.service";
+import { AuthService } from "../../services/auth.service";
 import { UserInfo } from "../../auth/user-info";
 
 
@@ -76,7 +76,7 @@ export class UserProfileComponent implements OnInit {
             series: data.series,
             m_l_name: data.m_l_name,
             b_date: data.b_date,
-            key: data.key
+            // key: data.key
           }
           this.RUT = data.rut;
           this.DV = data.dv
@@ -97,13 +97,14 @@ export class UserProfileComponent implements OnInit {
         this.ngForm.series,
         this.ngForm.m_l_name,
         this.ngForm.b_date,
-        this.ngForm.key
+        // this.ngForm.key
       );
       this.authservice.userProfileUpdate(this.userInfo).subscribe(
         data => {
           if (data) {
             console.log(data)
-            alert(data.success)
+            // alert(data.success)
+            this.router.navigate(['/CertificateDelivery']);
             return true;
           }
         }
@@ -119,7 +120,7 @@ export class UserProfileComponent implements OnInit {
         this.form.serie,
         this.form.m_l_name,
         this.form.datepicker,
-        this.form.clave
+        // this.form.clave
       );
       this.authservice.signUp(this.userInfo).subscribe(
         data => {
@@ -130,8 +131,9 @@ export class UserProfileComponent implements OnInit {
             }else if(data.message === "Email already exist") {
               alert("El usuario ya existe con este Email")
             }else{
-              alert(data.success)
-              window.location.reload();
+              // alert(data.success)
+              // window.location.reload();
+              this.router.navigate(['/CertificateDelivery']);
               return true;
             }
           }
