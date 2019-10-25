@@ -17,12 +17,15 @@ import { UserInfo } from "../../auth/user-info";
   styleUrls: ['./user-profile.component.scss']
 })
 export class UserProfileComponent implements OnInit {
+  // Declaration
   bsConfig: Partial<BsDatepickerConfig>;
   maxDate: Date;
   userInfo : UserInfo;   
   ngForm: any;
   form: any = {};
   errorMessage = '';
+  date:any;
+  isDateTouched:boolean = false;
 
   // RUT validation
   isRutValid : boolean = false;
@@ -66,28 +69,63 @@ export class UserProfileComponent implements OnInit {
     // Retriving Userdata if user already registered
     this.authservice.userProfile().subscribe(
       data => {
-        // console.log(data)
         if (data !== null) {
-          this.ngForm = {
+        this.date = data.b_date
+        this.date = this.date.split('-')
+        this.ngForm = {
             f_name: data.f_name,
             l_name: data.l_name,
             email: data.email,
             rut: data.rut + data.dv,
             series: data.series,
             m_l_name: data.m_l_name,
-            b_date: data.b_date,
-            // key: data.key
+            b_date: (parseInt(this.date[2] , 10) + 1) +'-'+ this.date[1] +'-'+ this.date[0],
+            status: 'existing'
           }
           this.RUT = data.rut;
           this.DV = data.dv
-        }
+        }else{
+          this.ngForm = {
+            f_name: null,
+            l_name: null,
+            email: null,
+            rut:null,
+            series: null,
+            m_l_name: null,
+            b_date: null,
+            status: 'new'
+          }
+        }        
       }
     );
   }
 
   onSubmit(form){
     // Assign the values
-    if (this.ngForm) {
+    if (this.ngForm.status === 'existing') {
+      this.userInfo = new UserInfo(
+        this.ngForm.f_name,
+        this.ngForm.l_name,
+        this.ngForm.email,
+        this.RUT,
+        this.DV,
+        this.ngForm.series,
+        this.ngForm.m_l_name,
+        this.isDateTouched? this.ngForm.b_date : this.date.join('-') ,
+      );
+      
+      this.authservice.userProfileUpdate(this.userInfo).subscribe(
+        data => {
+          if (data) {
+            // console.log(data)
+            alert(data.success)
+            this.router.navigate(['/CertificateDelivery']);
+            return true;
+          }
+        }
+      )
+    }else{
+      // 7903486k
       this.userInfo = new UserInfo(
         this.ngForm.f_name,
         this.ngForm.l_name,
@@ -97,41 +135,17 @@ export class UserProfileComponent implements OnInit {
         this.ngForm.series,
         this.ngForm.m_l_name,
         this.ngForm.b_date,
-        // this.ngForm.key
-      );
-      this.authservice.userProfileUpdate(this.userInfo).subscribe(
-        data => {
-          if (data) {
-            console.log(data)
-            // alert(data.success)
-            this.router.navigate(['/CertificateDelivery']);
-            return true;
-          }
-        }
-      )
-    }else{
-      // 7903486k
-      this.userInfo = new UserInfo(
-        this.form.f_name,
-        this.form.l_name,
-        this.form.email,
-        this.RUT,
-        this.DV,
-        this.form.serie,
-        this.form.m_l_name,
-        this.form.datepicker,
-        // this.form.clave
       );
       this.authservice.signUp(this.userInfo).subscribe(
         data => {
           if (data) {
-            console.log(data)
+            // console.log(data)
             if (data.message === "RUT already exist") {
               alert("El usuario ya existe con este RUT")
             }else if(data.message === "Email already exist") {
               alert("El usuario ya existe con este Email")
             }else{
-              // alert(data.success)
+              alert(data.success)
               // window.location.reload();
               this.router.navigate(['/CertificateDelivery']);
               return true;

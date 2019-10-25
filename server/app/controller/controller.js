@@ -3,7 +3,6 @@ const config = require('../config/config');
 const User = db.user;
 const PurchaseCode = db.purchase_code;
 var jwt = require('jsonwebtoken');
-var crypto = require('crypto');
 
 
 
@@ -21,11 +20,6 @@ exports.oneuserinfo = (req, res) => {
             }
         }).then(user => {
             if (user) {
-                // Decrypt to the Key
-                // var mykey = crypto.createDecipher('aes-128-cbc', 'mypassword');
-                // var key = mykey.update(user.key, 'hex', 'utf8')
-                // key += mykey.final('utf8');
-                // user.key = key;
                 res.status(200).send(user);
             }
             res.status(200).send(user);
@@ -39,11 +33,6 @@ exports.oneuserinfo = (req, res) => {
 
 // User signup
 exports.signup = (req, res) => {
-    // Encrypt the Key
-    // var mykey = crypto.createCipher('aes-128-cbc', 'mypassword');
-    // var keyHex = mykey.update(req.body.key, 'utf8', 'hex')
-    // keyHex += mykey.final('hex');
-
     User.create({
         f_name : req.body.f_name, 
         l_name : req.body.l_name, 
@@ -53,7 +42,6 @@ exports.signup = (req, res) => {
         series : req.body.series, 
         m_l_name : req.body.m_l_name, 
         b_date : req.body.b_date, 
-        // key : keyHex
     }).then(user => {
         PurchaseCode.update(
             {
@@ -63,7 +51,7 @@ exports.signup = (req, res) => {
                 where: {p_code : res.locals.p_code}
             }
         ).then(PurchaseCode => {
-            res.status(200).send({success:'User registered successfully'})
+            res.status(200).send({success:'Registrado correctamente'})
         }).catch(err => {
             res.status(500).send({ reason: err.message });
         });
@@ -74,11 +62,6 @@ exports.signup = (req, res) => {
 
 // User update
 exports.update = (req, res) => {
-    // Encrypt the Key
-    // var mykey = crypto.createCipher('aes-128-cbc', 'mypassword');
-    // var keyHex = mykey.update(req.body.key, 'utf8', 'hex')
-    // keyHex += mykey.final('hex');
-    
     // res.send({'p_code':res.locals.p_code})
     User.update(
         {
@@ -90,7 +73,6 @@ exports.update = (req, res) => {
             series : req.body.series, 
             m_l_name : req.body.m_l_name, 
             b_date : req.body.b_date, 
-            // key : keyHex
         },
         { where: { rut : req.body.rut }
     }).then(user => {
@@ -102,7 +84,7 @@ exports.update = (req, res) => {
                 where: {p_code : res.locals.p_code}
             }
         ).then(PurchaseCode => {
-            res.status(200).send({success:'User updated successfully'})
+            res.status(200).send({success:'perfil actualizado con éxito'})
         }).catch(err => {
             res.status(500).send({ reason: err.message });
         });
@@ -123,7 +105,6 @@ exports.addpurchasecode = (req, res) => {
         res.status(200).send({
             auth: true,
             accessToken: token,
-            // p_code: user.p_code
         });
     }).catch(err => {
         res.status(500).send({ reason: err.message });

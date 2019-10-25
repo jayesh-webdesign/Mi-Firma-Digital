@@ -4,6 +4,7 @@ const cors = require('cors');
 const db = require('./app/config/db.config');
 const morgan = require('morgan');
 const app = express();
+const path = require('path')
 
 app.use(morgan('dev'))
 
@@ -17,26 +18,22 @@ app.use(cors({
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-
-// app.use(function(req, res, next) {
-//     res.header("Access-Control-Allow-Origin", 'http://localhost:4200');
-//     res.header("Access-Control-Allow-Credentials", true);
-//     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-//     res.header("Access-Control-Allow-Headers", 'Origin, X-Requested-With, Content-Type, Accept, content-type, application/json, authorization');
-//     next();
-//   });
-
-
+app.use(express.static(path.join(__dirname, '../client/dist/mi-firma-digital')))
 
 
 
 // Routes
-app.get('/', (req, res) => {
-    res.send('Welcome')
+app.get('*', (req, res) => {
+  return res.sendFile(path.join(__dirname, '../client/dist/mi-firma-digital/index.html'))
 });
 
+// For dev
 app.use('/user', require('./app/routes/router'));
 app.use('/file', require('./app/routes/file-upload'));
+
+// For Prod
+app.use('/api/user', require('./app/routes/router'));
+app.use('/api/file', require('./app/routes/file-upload'));
 
 // Start the Server
 const PORT = process.env.PORT || 3000;
