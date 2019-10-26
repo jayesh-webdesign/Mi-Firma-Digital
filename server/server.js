@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, '../client/dist/mi-firma-digital')))
 
 // Routes
 app.get('*', (req, res) => {
-  return res.sendFile(path.join(__dirname, '../client/dist/mi-firma-digital/index.html'))
+  return res.sendFile(path.join(__dirname, '../client/dist/mi-firma-digital'))
 });
 
 // For dev

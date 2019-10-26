@@ -179,12 +179,18 @@ export class UserProfileComponent implements OnInit {
       this.authservice.signUp(this.userInfo).subscribe(
         data => {
           if (data) {
-            // console.log(data)
+            console.log(data)
+            console.log({'message':data.message})
             if (data.message === "RUT already exist") {
               alert("El usuario ya existe con este RUT")
-            } else if (data.message === "Email already exist") {
+            } 
+            else if (data.message === "Email already exist") {
               alert("El usuario ya existe con este Email")
-            } else {
+            } 
+            else if (data.message === "series already exist") {
+              alert("El usuario ya existe con este Serie")
+            } 
+            else {
               alert(data.success)
               // window.location.reload();
               this.certificateService.EnrollUser(this.formdata.username, this.formdata.password, this.formdata.fullname, this.formdata.email)
