@@ -14,13 +14,31 @@ export class CertificateService {
 
   GenerateCertificate(user: string, password: string) {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      // 'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json'
     });
-
     let options = { headers: headers };
     let local_api_url = 'sign/pfx';
-    // return this.http.get('../../assets/Test_Certificate.json');
-    return this.http.post(this.API_URL + `/${local_api_url}`, { username: user, passwd: password }, options);
+    let payload = {
+      username: user
+      , password: password
+    }
+    return this.http.post(this.API_URL + `/${local_api_url}`, payload, options);
+  }
+
+  EnrollUser(user: string, password: string, fullname: string, email: string) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    let options = { headers: headers };
+
+    let local_api_url = 'user';
+
+    let payload = {
+      username: user
+      , password: password
+      , fullname: fullname
+      , email: email
+    }
+    return this.http.post(this.API_URL + `/${local_api_url}`, payload, options);
   }
 }

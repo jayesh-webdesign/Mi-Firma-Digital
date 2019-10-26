@@ -55,7 +55,13 @@ checkPurchaseCodeAlreadyExist = (req, res, next) => {
     PurchaseCode.findOne({
         where : {
             p_code : req.body.p_code
-        }
+        },
+        include:[{
+            model:User,
+            attributes: {
+                exclude: ['key']
+            }
+        }]
     }).then(user => {
             if(user){
                 if(user.userRut) {
@@ -66,7 +72,9 @@ checkPurchaseCodeAlreadyExist = (req, res, next) => {
                     res.status(200).send({
                         auth: true,
                         accessToken: token,
-                        message: 'User alredy registered'
+                        message: 'User alredy registered',
+                        id: user.userId,
+                        userInfo:user.user
                     });
                 }else{
                     var token = jwt.sign({p_code: user.p_code}, config.secret, {

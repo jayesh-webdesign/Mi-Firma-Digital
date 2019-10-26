@@ -9,10 +9,19 @@ import { Router } from "@angular/router";
 export class UploadCertificateComponent implements OnInit {
 
   public uploadVerified : boolean = false;
-
+  formdata = {
+    pursharse_code : null
+  , password:null
+  };
   constructor(private router:Router) { 
     
-   }
+    // console.log(this.router.getCurrentNavigation().extras.state);
+    let info = this.router.getCurrentNavigation().extras.state;
+    if(this.router.getCurrentNavigation().extras.state){
+      this.formdata.pursharse_code = info.pursharse_code;
+      this.formdata.password = info.password;
+    }
+  }
 
   ngOnInit() {
     if (sessionStorage.getItem('router') != 'upload-certificate') {
@@ -37,7 +46,9 @@ export class UploadCertificateComponent implements OnInit {
     // console.log(f.value);
     // window.location.reload();
     sessionStorage.setItem('router' , 'user-profile');
-    this.router.navigate(['/user-profile']);
+    // this.router.navigate(['/user-profile']);
+    // console.log(this.formdata);
+    this.router.navigateByUrl('/user-profile', { state: this.formdata });
   }
 
 }

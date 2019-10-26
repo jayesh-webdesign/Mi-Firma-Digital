@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { CertificateService } from './../../services/certificate.service';
 import { saveAs } from 'file-saver';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-certificate-delivery',
@@ -13,16 +14,32 @@ export class CertificateDeliveryComponent implements OnInit {
   model: {
     user: string
     password: string
-  };
+  }= {
+       user: null,
+       password: null
+     }
   // msg: string;
   constructor(
     private toastr: ToastrService,
-    private certificateService: CertificateService
+    private certificateService: CertificateService,
+    private router: Router
+
   ) {
-    this.model = {
-      user: null,
-      password: null
+    // console.log(this.router.getCurrentNavigation().extras.state);
+    let info = this.router.getCurrentNavigation().extras.state;
+    if(this.router.getCurrentNavigation().extras.state){
+      this.model.user = info.username;
+      this.model.password = info.password;
+      // this.model = {
+      //   user: info.pursharse_code,
+      //   password: info.password
+      // }
     }
+    // console.log(this.model);
+    // this.model = {
+    //   user: null,
+    //   password: null
+    // }
   }
 
   ngOnInit() {

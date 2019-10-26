@@ -3,7 +3,7 @@
         {{errorMessage}}
     </div>
     <form id="purchase-code-form" class="submitted_{{f.submitted}}" name="form" #f="ngForm"
-        (ngSubmit)="f.valid && onSubmit()">
+        (ngSubmit)="f.valid && onSubmit(f)">
         <div class="form-group row">
             <div class="col-md-3">
                 <input type="text" required class="form-control" id="purchasecode" name="purchasecode"
@@ -49,9 +49,6 @@
                     ngModel 
                     #captcha="ngModel"
                 ></re-captcha>
-                <!-- <re-captcha (resolved)="resolved($event)" siteKey="6LdDL74UAAAAANihFg8v63RA2YOFbh0ACG1nWhy8"
-                    name="captcha" ngModel #captcha="ngModel"></re-captcha> -->
-
             </div>
             <div class="invalid-feedback" *ngIf="(f.submitted && !captcha.touched)">
                 Por favor verifique captcha
