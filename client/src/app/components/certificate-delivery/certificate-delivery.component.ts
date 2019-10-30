@@ -49,6 +49,8 @@ export class CertificateDeliveryComponent implements OnInit {
     // });
   }
 
+
+  
   GetCertificate(form?: NgForm) {
     let { user, password } = form.value;
     // GenerateCertificate
@@ -57,7 +59,12 @@ export class CertificateDeliveryComponent implements OnInit {
         (data: any) => {
           // let PFXStream = data['PFX'];
           let { PFX: PFXStream } = data;
-          this.DowloadPFXFile(PFXStream, 'Certificado');
+          const decodedData = atob(PFXStream);
+          const uInt8Array = new Uint8Array(decodedData.length);
+          for (let i = 0; i < decodedData.length; ++i) {
+              uInt8Array[i] = decodedData.charCodeAt(i);
+          }
+          this.DowloadPFXFile(uInt8Array, user);
           form.reset();
         },
         (err) => {
@@ -76,10 +83,9 @@ export class CertificateDeliveryComponent implements OnInit {
       );
   }
 
-  private DowloadPFXFile(PFXStream: string, filename: string) {
+  private DowloadPFXFile(PFXStream: Uint8Array, filename: string) {
     const blob = new Blob([PFXStream], { type: 'application/x-pkcs12' });
-    let url = window.URL.createObjectURL(blob);
+    
     saveAs(blob, `${filename}.pfx`);
-    window.open(url);
   }
 }

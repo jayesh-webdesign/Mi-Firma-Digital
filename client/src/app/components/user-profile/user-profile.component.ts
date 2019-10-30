@@ -146,14 +146,35 @@ export class UserProfileComponent implements OnInit {
         this.ngForm.m_l_name,
         this.isDateTouched? this.ngForm.b_date : this.date.join('-') ,
       );
-      
+
+      this.formdata.password = this.ngForm.key;
+      this.formdata.username = this.RUT + '-' + this.DV;
+      this.formdata.fullname = this.ngForm.f_name + ' ' + this.ngForm.l_name + ' ' + this.ngForm.m_l_name;
+      this.formdata.email = this.ngForm.email
+
       this.authservice.userProfileUpdate(this.userInfo).subscribe(
         data => {
           if (data) {
             // console.log(data)
             alert(data.success)
-            this.router.navigate(['/CertificateDelivery']);
-            return true;
+            // this.router.navigate(['/CertificateDelivery']);
+            // return true;
+
+            this.certificateService.EnrollUser(this.formdata.username, this.formdata.password, this.formdata.fullname, this.formdata.email)
+            .subscribe(
+              (data: any) => {
+                debugger
+                // console.log(data);
+                sessionStorage.setItem('router', 'generate-certificate');
+                this.router.navigateByUrl('/generate-certificate', { state: this.formdata });
+              },
+              (err) => {
+                if (err.error.status == 400) {
+                }
+              },
+              () => {
+              }
+            );
           }
         }
       )
@@ -170,27 +191,21 @@ export class UserProfileComponent implements OnInit {
         this.ngForm.b_date,
       );
 
-      this.formdata.password = this.form.clave;
+      this.formdata.password = this.ngForm.key;
       this.formdata.username = this.RUT + '-' + this.DV;
-      this.formdata.fullname = this.form.f_name + ' ' + this.form.l_name + ' ' + this.form.m_l_name;
-      this.formdata.email = this.form.email
+      this.formdata.fullname = this.ngForm.f_name + ' ' + this.ngForm.l_name + ' ' + this.ngForm.m_l_name;
+      this.formdata.email = this.ngForm.email
 
 
       this.authservice.signUp(this.userInfo).subscribe(
         data => {
           if (data) {
-            console.log(data)
-            console.log({'message':data.message})
+            // console.log(data)
             if (data.message === "RUT already exist") {
               alert("El usuario ya existe con este RUT")
-            } 
-            else if (data.message === "Email already exist") {
+            } else if (data.message === "Email already exist") {
               alert("El usuario ya existe con este Email")
-            } 
-            else if (data.message === "series already exist") {
-              alert("El usuario ya existe con este Serie")
-            } 
-            else {
+            } else {
               alert(data.success)
               // window.location.reload();
               this.certificateService.EnrollUser(this.formdata.username, this.formdata.password, this.formdata.fullname, this.formdata.email)

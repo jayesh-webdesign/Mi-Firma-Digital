@@ -5,6 +5,7 @@ import { AuthService } from "../../services/auth.service";
 import { AddPurchaseCode } from "../../auth/user-info";
 import { TokenStorageService } from "../../services/token-storage.service";
 import { RecaptchaComponent } from 'ng-recaptcha';
+import { CertificateService } from './../../services/certificate.service';
 
 @Component({
   selector: 'purchase-code-verification',
@@ -34,7 +35,7 @@ export class PurchaseCodeVerificationComponent implements OnInit {
     pursharse_code : null
   , password:null
   };
-  constructor(private authService: AuthService,  private tokenStorage: TokenStorageService, private router: Router) {}
+  constructor(private authService: AuthService,  private tokenStorage: TokenStorageService, private router: Router, private certificateService: CertificateService) {}
   ngOnInit() { 
     this.tokenStorage.clearToken() 
     this.form.purchasecode='11111-111'
@@ -59,17 +60,32 @@ export class PurchaseCodeVerificationComponent implements OnInit {
         if( data.message === undefined || data.message === 'Purchase code alredy registered'){
           this.isSignedUp = true;
           sessionStorage.setItem('router','upload-certificate');
-          // this.router.navigate(['/upload-certificate']), { state: formdata };
+          // debugger
+          // this.certificateService.ExternalAuthService().subscribe(
+          //   (data: any) => {
+          //     debugger
+          //     console.log(data);
+          //   },
+          //   err => {
+          //     console.log(err);
+          //   }
+          // )
           this.router.navigateByUrl('/upload-certificate', { state: this.formdata });
-          // console.log('/upload-certificate')
-          return true;
         }
         if( data.message === 'User alredy registered' ){
           sessionStorage.setItem('router','user-profile');
-          // this.router.navigate(['/user-profile']);
+          this.router.navigate(['/user-profile']);
           this.router.navigateByUrl('/user-profile', { state: {formdata:this.formdata,userInfo:data['userInfo']} });
-
-          // console.log('/user-profile')
+          // debugger
+          // this.certificateService.ExternalAuthService().subscribe(
+          //   (data: any) => {
+          //     debugger
+          //     console.log(data);
+          //   },
+          //   err => {
+          //     console.log(err);
+          //   }
+          // )
         }
       },
       error => {

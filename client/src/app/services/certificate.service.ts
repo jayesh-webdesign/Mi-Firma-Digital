@@ -39,6 +39,26 @@ export class CertificateService {
       , fullname: fullname
       , email: email
     }
+    debugger
+
     return this.http.post(this.API_URL + `/${local_api_url}`, payload, options);
+  }
+
+  ExternalAuthService() {
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    });
+    const params1 = { p_code: 1111 - 11121 };
+    return  this.http.post('https://auth.firma.digital' ,params1.toString(), 
+    {
+        headers:  headers,
+        withCredentials: true,
+        observe: 'response',
+        //params: params1,
+        responseType: 'text',
+        reportProgress: true
+    })
   }
 }

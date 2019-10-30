@@ -109,9 +109,9 @@ checkPurchaseCodeAlreadyExist = (req, res, next) => {
         },
         include:[{
             model:User,
-            attributes: {
-                exclude: ['key']
-            }
+            // attributes: {
+            // exclude: ['key']
+            // }
         }]
     }).then(user => {
             if(user){
