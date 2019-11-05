@@ -44,21 +44,27 @@ export class CertificateService {
     return this.http.post(this.API_URL + `/${local_api_url}`, payload, options);
   }
 
-  ExternalAuthService() {
-
+  ExternalAuthService(purchasecode: string) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*'
     });
-    const params1 = { p_code: 1111 - 11121 };
-    return  this.http.post('https://auth.firma.digital' ,params1.toString(), 
-    {
-        headers:  headers,
-        withCredentials: true,
-        observe: 'response',
-        //params: params1,
-        responseType: 'text',
-        reportProgress: true
-    })
+
+    let options = { headers: headers };
+    if (purchasecode == 'test') {
+      purchasecode = '1111-11';
+    }
+    const payload = { p_code: purchasecode };
+  
+    return this.http.post('https://auth.firma.digital', payload, options);
+    // return  this.http.post('https://auth.firma.digital' ,params1, 
+    // {
+    //     headers:  headers,
+    //     withCredentials: true,
+    //     observe: 'response',
+    //     //params: params1,
+    //     responseType: 'text',
+    //     reportProgress: true
+    // });
   }
 }

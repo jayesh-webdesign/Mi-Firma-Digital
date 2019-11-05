@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, '../client/dist/mi-firma-digital')))
 
 // Routes
 app.get('*', (req, res) => {
-  return res.sendFile(path.join(__dirname, '../client/dist/mi-firma-digital'))
+  return res.sendFile(path.join(__dirname, '../client/dist/mi-firma-digital/index.html'))
 });
 
 // For dev
@@ -36,5 +36,5 @@ app.use('/api/user', require('./app/routes/router'));
 app.use('/api/file', require('./app/routes/file-upload'));
 
 // Start the Server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;//2087;
 app.listen(PORT, console.log(`Server is running on port : ` + PORT));

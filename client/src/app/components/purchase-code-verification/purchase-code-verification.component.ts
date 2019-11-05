@@ -23,7 +23,7 @@ export class PurchaseCodeVerificationComponent implements OnInit {
     this.captchaResolved = true;
   }
 
-  
+
 
   // Submitting the form
   form: any = {};
@@ -32,60 +32,68 @@ export class PurchaseCodeVerificationComponent implements OnInit {
   isSignedUp = false;
   signupFailed = false;
   formdata = {
-    pursharse_code : null
-  , password:null
+    pursharse_code: null
+    , password: null
   };
-  constructor(private authService: AuthService,  private tokenStorage: TokenStorageService, private router: Router, private certificateService: CertificateService) {}
-  ngOnInit() { 
-    this.tokenStorage.clearToken() 
-    this.form.purchasecode='11111-111'
+  constructor(private authService: AuthService, private tokenStorage: TokenStorageService, private router: Router, private certificateService: CertificateService) { }
+  ngOnInit() {
+    this.tokenStorage.clearToken()
+    this.form.purchasecode = '11111-111'
   }
 
-  onSubmit(f:any) {
-    if(this.captchaResolved === false){
+  onSubmit() {
+    if (this.captchaResolved === false) {
       this.errorMessage = 'Por favor complete Captcha';
       this.signupFailed = true;
       return true;
     }
     // Assign the values
     this.addPurchaseCode = new AddPurchaseCode(
-        this.form.purchasecode
+      this.form.purchasecode
     );
-    this.formdata.pursharse_code= this.form.purchasecode;
-   
+    this.formdata.pursharse_code = this.form.purchasecode;
+
     this.authService.addPurchasecode(this.addPurchaseCode).subscribe(
       data => {
         // console.log(data);
         this.tokenStorage.saveToken(data.accessToken);
-        if( data.message === undefined || data.message === 'Purchase code alredy registered'){
+        if (data.message === undefined || data.message === 'Purchase code alredy registered') {
           this.isSignedUp = true;
-          sessionStorage.setItem('router','upload-certificate');
-          // debugger
-          // this.certificateService.ExternalAuthService().subscribe(
-          //   (data: any) => {
-          //     debugger
-          //     console.log(data);
-          //   },
-          //   err => {
-          //     console.log(err);
-          //   }
-          // )
-          this.router.navigateByUrl('/upload-certificate', { state: this.formdata });
+          sessionStorage.setItem('router', 'upload-certificate');
+          debugger
+          this.certificateService.ExternalAuthService(this.form.purchasecode).subscribe(
+            (dataAuth: any) => {
+              debugger
+              if (dataAuth.validationStatus==="SUCCESS") { 
+                sessionStorage.setItem('router', 'user-profile');
+                this.router.navigateByUrl('/user-profile', { state: {formdata:this.formdata,cert_flg:true , certInfo:dataAuth} });
+              }
+              // console.log(dataAuth);
+            },
+            err => {
+              console.log(err);
+            }
+          );
+          // this.router.navigateByUrl('/upload-certificate', { state: this.formdata });
         }
-        if( data.message === 'User alredy registered' ){
-          sessionStorage.setItem('router','user-profile');
-          this.router.navigate(['/user-profile']);
-          this.router.navigateByUrl('/user-profile', { state: {formdata:this.formdata,userInfo:data['userInfo']} });
+        if (data.message === 'User alredy registered') {
+          let userInfo = data['userInfo'];
+          // sessionStorage.setItem('router', 'user-profile');
+          // this.router.navigateByUrl('/user-profile', { state: {formdata:this.formdata,userInfo:data['userInfo']} });
           // debugger
-          // this.certificateService.ExternalAuthService().subscribe(
-          //   (data: any) => {
-          //     debugger
-          //     console.log(data);
-          //   },
-          //   err => {
-          //     console.log(err);
-          //   }
-          // )
+          this.certificateService.ExternalAuthService(this.form.purchasecode).subscribe(
+            (dataAuth: any) => {
+              debugger
+              if (dataAuth.validationStatus==="SUCCESS") { 
+                sessionStorage.setItem('router', 'user-profile');
+                this.router.navigateByUrl('/user-profile', { state: {formdata:this.formdata,cert_flg:true , certInfo:dataAuth} });
+              }
+              // console.log(dataAuth);
+            },
+            err => {
+              console.log(err);
+            }
+          )
         }
       },
       error => {
@@ -97,7 +105,7 @@ export class PurchaseCodeVerificationComponent implements OnInit {
 }
 
 // Timeout Handle for recapcha
-RecaptchaComponent.prototype.ngOnDestroy = function() {
+RecaptchaComponent.prototype.ngOnDestroy = function () {
   if (this.subscription) {
     this.subscription.unsubscribe();
   }

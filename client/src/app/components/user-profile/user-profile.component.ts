@@ -38,6 +38,10 @@ export class UserProfileComponent implements OnInit {
   isRutValid: boolean = false;
   RUT: string;
   DV: string;
+
+  cert_flg: boolean =  false;
+  certInfo: any = {};
+
   rutValidation(rut) {
     // 7903486k
     if (rut) {
@@ -78,19 +82,41 @@ export class UserProfileComponent implements OnInit {
         this.formdata.pursharse_code = info.formdata.pursharse_code;
         this.formdata.password = info.formdata.password;
       }
-      if (info.formdata) {
-        this.form.rut = info.userInfo.rut + '-' + info.userInfo.dv;
-        this.RUT = info.userInfo.rut;
-        this.DV = info.userInfo.dv;
-        this.form.f_name = info.userInfo.f_name;
-        this.form.l_name = info.userInfo.l_name;
-        this.form.email = info.userInfo.email;
-        this.form.serie = info.userInfo.series;
-        this.form.m_l_name = info.userInfo.m_l_name;
-        let date = info.userInfo.b_date.split('-');
-        this.form.datepicker = date[2] + '-' + date[1] + '-' + date[0];
-        // this.form.clave=info.userInfo.;
-      }
+      // if (info.userInfo) {
+      //   this.form.rut = info.userInfo.rut + '-' + info.userInfo.dv;
+      //   this.RUT = info.userInfo.rut;
+      //   this.DV = info.userInfo.dv;
+      //   this.form.f_name = info.userInfo.f_name;
+      //   this.form.l_name = info.userInfo.l_name;
+      //   this.form.email = info.userInfo.email;
+      //   this.form.serie = info.userInfo.series;
+      //   this.form.m_l_name = info.userInfo.m_l_name;
+      //   let date = info.userInfo.b_date.split('-');
+      //   this.form.datepicker = date[2] + '-' + date[1] + '-' + date[0];
+      //   // this.form.clave=info.userInfo.;
+      // }
+
+      this.cert_flg = info.cert_flg;
+      this.certInfo = info.certInfo
+    
+      // if (info.cert_flg) {
+      //   if (info.certInfo) {
+      //     // console.log(info.certInfo);
+      //     const rutSplit = info.certInfo.rut.split('-');
+
+      //     this.form.rut = info.certInfo.rut;
+      //     this.RUT = rutSplit[0];
+      //     this.DV = rutSplit[1];
+      //     this.ngForm.flg_full_name = true;
+      //     this.form.full_name = info.certInfo.name;
+      //     this.form.f_name = null;
+      //     this.form.l_name = null;
+      //     this.form.email = info.certInfo.email;
+      //     this.form.serie = null;
+      //     this.form.m_l_name = null;
+      //     this.form.datepicker = null;
+      //   }
+      // }
     }
   }
 
@@ -100,37 +126,75 @@ export class UserProfileComponent implements OnInit {
     }
 
     // Retriving Userdata if user already registered
-    this.authservice.userProfile().subscribe(
-      data => {
-        if (data !== null) {
-        this.date = data.b_date
-        this.date = this.date.split('-')
-        this.ngForm = {
-            f_name: data.f_name,
-            l_name: data.l_name,
-            email: data.email,
-            rut: data.rut + data.dv,
-            series: data.series,
-            m_l_name: data.m_l_name,
-            b_date: (parseInt(this.date[2] , 10) + 1) +'-'+ this.date[1] +'-'+ this.date[0],
-            status: 'existing'
-          }
-          this.RUT = data.rut;
-          this.DV = data.dv
-        }else{
+    if (this.cert_flg) {
+        if (this.certInfo) {
+          // console.log(this.certInfo);
+          const rutSplit = this.certInfo.rut.split('-');
+          // this.form.rut = this.certInfo.rut;
+          // this.ngForm.flg_full_name = true;
+          // this.form.full_name = this.certInfo.name;
+          // this.form.f_name = null;
+          // this.form.l_name = null;
+          // this.form.email = this.certInfo.email;
+          // this.form.serie = null;
+          // this.form.m_l_name = null;
+          // this.form.datepicker = null;
+
           this.ngForm = {
             f_name: null,
             l_name: null,
-            email: null,
-            rut:null,
-            series: null,
             m_l_name: null,
+            flg_full_name: true,
+            full_name: this.certInfo.name,
+            email: this.certInfo.email,
+            rut: this.certInfo.rut,
+            series: null,
             b_date: null,
-            status: 'new'
+            status: 'existing'
           }
-        }        
-      }
-    );
+          this.RUT = rutSplit[0];
+          this.DV = rutSplit[1];
+          // console.log(this.ngForm.rut);
+          // console.log(this.RUT);
+          // console.log(this.DV);
+        }
+    } else {
+      this.authservice.userProfile().subscribe(
+        data => {
+          if (data !== null) {
+            this.date = data.b_date
+            this.date = this.date.split('-')
+            this.ngForm = {
+              f_name: data.f_name,
+              l_name: data.l_name,
+              email: data.email,
+              rut: data.rut + data.dv,
+              series: data.series,
+              m_l_name: data.m_l_name,
+              b_date: (parseInt(this.date[2], 10) + 1) + '-' + this.date[1] + '-' + this.date[0],
+              status: 'existing',
+              flg_full_name: false,
+              full_name: null
+            }
+            this.RUT = data.rut;
+            this.DV = data.dv
+          } else {
+            this.ngForm = {
+              f_name: null,
+              l_name: null,
+              email: null,
+              rut: null,
+              series: null,
+              m_l_name: null,
+              b_date: null,
+              status: 'new',
+              flg_full_name: false,
+              full_name: null
+            }
+          }
+        }
+      );
+    }
   }
 
   onSubmit(form) {
@@ -149,8 +213,8 @@ export class UserProfileComponent implements OnInit {
 
       this.formdata.password = this.ngForm.key;
       this.formdata.username = this.RUT + '-' + this.DV;
-      this.formdata.fullname = this.ngForm.f_name + ' ' + this.ngForm.l_name + ' ' + this.ngForm.m_l_name;
-      this.formdata.email = this.ngForm.email
+      this.formdata.fullname =this.ngForm.flg_full_name?this.ngForm.full_name:(this.ngForm.f_name + ' ' + this.ngForm.l_name + ' ' + this.ngForm.m_l_name);
+      this.formdata.email = this.ngForm.email;
 
       this.authservice.userProfileUpdate(this.userInfo).subscribe(
         data => {
@@ -193,7 +257,7 @@ export class UserProfileComponent implements OnInit {
 
       this.formdata.password = this.ngForm.key;
       this.formdata.username = this.RUT + '-' + this.DV;
-      this.formdata.fullname = this.ngForm.f_name + ' ' + this.ngForm.l_name + ' ' + this.ngForm.m_l_name;
+      this.formdata.fullname =this.ngForm.flg_full_name?this.ngForm.full_name:(this.ngForm.f_name + ' ' + this.ngForm.l_name + ' ' + this.ngForm.m_l_name);
       this.formdata.email = this.ngForm.email
 
 
